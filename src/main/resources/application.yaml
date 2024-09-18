@@ -34,20 +34,21 @@ spring:
     baselineOnMigrate: true
     fail-on-missing-locations: false
   datasource:
-    #url: 'jdbc:h2:file:./target/database/h2'
-    url: jdbc:h2:mem:test_mem
-    username: sa
-    password: null
-    driverClassName: org.h2.Driver
-    max-active: 15
-
-    # database connection pool size
+    url: jdbc:mysql://localhost:3306/fhir_db   # Replace with your MySQL database name
+    username: root                             # Your MySQL username (likely 'root')
+    password: gabovago                         # Replace with your MySQL password
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 10                    # Adjust as necessary for your environment
+
   jpa:
+    hibernate:
+      ddl-auto: update                         # Automatically updates schema based on the entity definitions
+    show-sql: true                             # Shows the SQL in the logs (for debugging)
+
     properties:
-      hibernate.format_sql: false
-      hibernate.show_sql: false
+      hibernate.dialect: org.hibernate.dialect.MySQL5Dialect  # Dialect for MySQL
+
 
       #Hibernate dialect is automatically detected except Postgres and H2.
       #If using H2, then supply the value of ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
